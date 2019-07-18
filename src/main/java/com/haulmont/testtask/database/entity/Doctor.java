@@ -1,8 +1,6 @@
 package com.haulmont.testtask.database.entity;
 
-public interface Doctor {
-    long getId();
-
+public interface Doctor extends Entity{
     String getName();
 
     void setName(String name);

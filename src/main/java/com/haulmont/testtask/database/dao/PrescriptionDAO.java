@@ -1,16 +1,13 @@
 package com.haulmont.testtask.database.dao;
 
-import com.haulmont.testtask.database.entity.Doctor;
-import com.haulmont.testtask.database.entity.Patient;
-import com.haulmont.testtask.database.entity.PrescriptionImpl;
-import com.haulmont.testtask.database.entity.Priority;
+import com.haulmont.testtask.database.entity.*;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrescriptionDAO extends BaseDAO<PrescriptionImpl> {
+public class PrescriptionDAO extends BaseDAO<Prescription> {
     private Connection connection;
 
     public PrescriptionDAO(Connection connection) {
@@ -18,10 +15,10 @@ public class PrescriptionDAO extends BaseDAO<PrescriptionImpl> {
     }
 
     @Override
-    public void insert(PrescriptionImpl entity) throws SQLException {
+    public void insert(Prescription entity) throws SQLException {
         final String SQL = "INSERT INTO PRESCRIPTIONS (DESCRIPTION, PATIENT_ID, DOCTOR_ID, CREATION_DATE, " +
                 "DAYS_VALIDITY, PRIORITY) " +
-                "VALUE(?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(SQL);
 
@@ -66,7 +63,7 @@ public class PrescriptionDAO extends BaseDAO<PrescriptionImpl> {
     }
 
     @Override
-    public void update(PrescriptionImpl entity) throws SQLException {
+    public void update(Prescription entity) throws SQLException {
         final String SQL = "UPDATE PRESCRIPTION " +
                 "SET DESCRIPTION = ?, PATIENT_ID = ?, DOCTOR_ID = ?, " +
                 "CREATION_DATE = ?, DAYS_VALIDITY = ?, PRIORITY = ? " +
@@ -87,7 +84,7 @@ public class PrescriptionDAO extends BaseDAO<PrescriptionImpl> {
     }
 
     @Override
-    public List<PrescriptionImpl> getAll() throws SQLException {
+    public List<Prescription> getAll() throws SQLException {
         String SQL = "SELECT * FROM PRESCRIPTION";
         List<PrescriptionImpl> list = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.haulmont.testtask.database.dao;
 
+import com.haulmont.testtask.database.entity.Patient;
 import com.haulmont.testtask.database.entity.PatientImpl;
 
 import java.sql.Connection;
@@ -9,15 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientDAO extends BaseDAO<PatientImpl> {
+public class PatientDAO extends BaseDAO<Patient> {
     public PatientDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public void insert(PatientImpl entity) throws SQLException {
+    public void insert(Patient entity) throws SQLException {
         final String SQL = "INSERT INTO PATIENTS (NAME, SURNAME, PATRONYMIC, PHONE_NUMBER) " +
-                "VALUE(?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(SQL);
 
@@ -52,7 +53,7 @@ public class PatientDAO extends BaseDAO<PatientImpl> {
     }
 
     @Override
-    public void update(PatientImpl entity) throws SQLException {
+    public void update(Patient entity) throws SQLException {
         final String SQL = "UPDATE PATIENTS " +
                 "SET NAME = ?, SURNAME = ?, PATRONYMIC = ?, PHONE_NUMBER = ? " +
                 "WHERE id = ?";
@@ -70,9 +71,9 @@ public class PatientDAO extends BaseDAO<PatientImpl> {
     }
 
     @Override
-    public List<PatientImpl> getAll() throws SQLException {
+    public List<Patient> getAll() throws SQLException {
         final String SQL = "SELECT * FROM PATIENTS";
-        List<PatientImpl> list = new ArrayList<>();
+        List<Patient> list = new ArrayList<>();
 
         PreparedStatement statement = connection.prepareStatement(SQL);
         ResultSet res = statement.executeQuery();
@@ -82,7 +83,7 @@ public class PatientDAO extends BaseDAO<PatientImpl> {
                     res.getString("PHONE_NUMBER")));
         }
 
-        connection.close();
+        statement.close();
         return list;
     }
 }

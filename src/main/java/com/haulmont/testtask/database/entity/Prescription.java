@@ -2,9 +2,7 @@ package com.haulmont.testtask.database.entity;
 
 import java.time.LocalDate;
 
-public interface Prescription {
-    long getId();
-
+public interface Prescription extends Entity {
     String getDescription();
 
     void setDescription(String description);

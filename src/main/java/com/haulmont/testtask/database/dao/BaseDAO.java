@@ -1,13 +1,13 @@
 package com.haulmont.testtask.database.dao;
 
-import com.haulmont.testtask.database.entity.BaseEntity;
+import com.haulmont.testtask.database.entity.Entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class BaseDAO<T extends BaseEntity> {
+public abstract class BaseDAO<T extends Entity> {
     protected Connection connection;
 
     public BaseDAO(Connection connection) {

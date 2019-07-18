@@ -1,5 +1,6 @@
 package com.haulmont.testtask.database.dao;
 
+import com.haulmont.testtask.database.entity.Doctor;
 import com.haulmont.testtask.database.entity.DoctorImpl;
 
 import java.sql.Connection;
@@ -9,13 +10,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorDAO extends BaseDAO<DoctorImpl> {
+public class DoctorDAO extends BaseDAO<Doctor> {
     public DoctorDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public void insert(DoctorImpl entity) throws SQLException {
+    public void insert(Doctor entity) throws SQLException {
         final String SQL = "INSERT INTO DOCTORS (NAME, SURNAME, PATRONYMIC, SPECIALTY) " +
                 "VALUES (?, ?, ?, ?);";
 
@@ -53,7 +54,7 @@ public class DoctorDAO extends BaseDAO<DoctorImpl> {
     }
 
     @Override
-    public void update(DoctorImpl entity) throws SQLException {
+    public void update(Doctor entity) throws SQLException {
         final String SQL = "UPDATE DOCTORS " +
                 "SET NAME = ?, SURNAME = ?, PATRONYMIC = ?, SPECIALTY = ?" +
                 "WHERE id = ?";
@@ -71,10 +72,10 @@ public class DoctorDAO extends BaseDAO<DoctorImpl> {
     }
 
     @Override
-    public List<DoctorImpl> getAll() throws SQLException {
+    public List<Doctor> getAll() throws SQLException {
         final String SQL = "SELECT * FROM DOCTORS";
 
-        List<DoctorImpl> list = new ArrayList<>();
+        List<Doctor> list = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL);
         ResultSet res = statement.executeQuery();
 

@@ -1,6 +1,6 @@
 package com.haulmont.testtask.database.entity;
 
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Entity{
     private long id;
 
     public BaseEntity(long id) {
