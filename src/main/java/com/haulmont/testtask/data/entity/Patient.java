@@ -1,6 +1,6 @@
-package com.haulmont.testtask.database.entity;
+package com.haulmont.testtask.data.entity;
 
-public interface Doctor extends Entity{
+public interface Patient extends Entity{
     String getName();
 
     void setName(String name);
@@ -13,7 +13,7 @@ public interface Doctor extends Entity{
 
     void setPatronymic(String patronymic);
 
-    String getSpecialty();
+    String getPhoneNumber();
 
-    void setSpecialty(String specialty);
+    void setPhoneNumber(String number);
 }

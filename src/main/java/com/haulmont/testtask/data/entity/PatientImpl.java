@@ -1,24 +1,24 @@
-package com.haulmont.testtask.database.entity;
+package com.haulmont.testtask.data.entity;
 
-public class DoctorImpl extends BaseEntity implements Doctor {
-    private String name;
+public class PatientImpl extends BaseEntity implements Patient {
+    private String name = "";
 
-    private String surname;
+    private String surname = "";
 
-    private String patronymic;
+    private String patronymic = "";
 
-    private String specialty;
+    private String phoneNumber = "";
 
-    public DoctorImpl(long id) {
+    public PatientImpl(long id) {
         super(id);
     }
 
-    public DoctorImpl(long id, String name, String surname, String patronymic, String specialty) {
+    public PatientImpl(long id, String name, String surname, String patronymic, String phoneNumber) {
         super(id);
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
-        this.specialty = specialty;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -26,6 +26,7 @@ public class DoctorImpl extends BaseEntity implements Doctor {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -51,12 +52,12 @@ public class DoctorImpl extends BaseEntity implements Doctor {
     }
 
     @Override
-    public String getSpecialty() {
-        return specialty;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Override
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

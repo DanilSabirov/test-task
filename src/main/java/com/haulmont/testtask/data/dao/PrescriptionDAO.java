@@ -1,6 +1,6 @@
-package com.haulmont.testtask.database.dao;
+package com.haulmont.testtask.data.dao;
 
-import com.haulmont.testtask.database.entity.*;
+import com.haulmont.testtask.data.entity.*;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -112,5 +112,15 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
         statement.close();
         return null;
+    }
+
+    @Override
+    public void delete(Prescription entity) throws SQLException {
+        final String SQL = "DELETE FROM PRESCRIPTIONS " +
+                "WHERE ID = ?";
+        PreparedStatement statement = connection.prepareStatement(SQL);
+        statement.setLong(1, entity.getId());
+        statement.executeUpdate();
+        statement.close();
     }
 }

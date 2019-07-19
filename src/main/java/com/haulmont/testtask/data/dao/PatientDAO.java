@@ -1,7 +1,7 @@
-package com.haulmont.testtask.database.dao;
+package com.haulmont.testtask.data.dao;
 
-import com.haulmont.testtask.database.entity.Patient;
-import com.haulmont.testtask.database.entity.PatientImpl;
+import com.haulmont.testtask.data.entity.Patient;
+import com.haulmont.testtask.data.entity.PatientImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,5 +85,15 @@ public class PatientDAO extends BaseDAO<Patient> {
 
         statement.close();
         return list;
+    }
+
+    @Override
+    public void delete(Patient entity) throws SQLException {
+        final String SQL = "DELETE FROM PATIENTS " +
+                "WHERE ID = ?";
+        PreparedStatement statement = connection.prepareStatement(SQL);
+        statement.setLong(1, entity.getId());
+        statement.executeUpdate();
+        statement.close();
     }
 }

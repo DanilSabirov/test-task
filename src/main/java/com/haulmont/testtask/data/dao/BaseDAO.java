@@ -1,9 +1,8 @@
-package com.haulmont.testtask.database.dao;
+package com.haulmont.testtask.data.dao;
 
-import com.haulmont.testtask.database.entity.Entity;
+import com.haulmont.testtask.data.entity.Entity;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,14 +19,7 @@ public abstract class BaseDAO<T extends Entity> {
 
     public abstract void update(T entity) throws SQLException;
 
-    public void delete(T entity) throws SQLException {
-        final String SQL = "DELETE FROM DOCTORS " +
-                "WHERE ID = ?";
-        PreparedStatement statement = connection.prepareStatement(SQL);
-        statement.setLong(1, entity.getId());
-        statement.executeUpdate();
-        statement.close();
-    }
+    public abstract void delete(T entity) throws SQLException;
 
     public abstract List<T> getAll() throws SQLException;
 }

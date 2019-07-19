@@ -1,4 +1,4 @@
-package com.haulmont.testtask.database.entity;
+package com.haulmont.testtask.data.entity;
 
 public enum Priority {
     NORMAL("Normal"),

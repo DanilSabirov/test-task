@@ -1,9 +1,9 @@
-package com.haulmont.testtask.database.entity;
+package com.haulmont.testtask.data.entity;
 
 import java.time.LocalDate;
 
 public class PrescriptionImpl extends BaseEntity implements Prescription {
-    private String description;
+    private String description = "";
 
     private Patient patient;
 
@@ -11,12 +11,13 @@ public class PrescriptionImpl extends BaseEntity implements Prescription {
 
     private LocalDate creationDate;
 
-    private int daysValidity;
+    private int daysValidity = 1;
 
-    private Priority priority;
+    private Priority priority = Priority.NORMAL;
 
-    public PrescriptionImpl(long id) {
+    public PrescriptionImpl(long id, Patient patient, Doctor doctor) {
         super(id);
+        creationDate = LocalDate.now();
     }
 
     public PrescriptionImpl(long id, String description, Patient patient, Doctor doctor, LocalDate creationDate, int daysValidity, Priority priority) {
