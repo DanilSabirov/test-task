@@ -66,6 +66,7 @@ public class DoctorsTab extends VerticalLayout implements Observer {
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    Notification.show("Failed delete doctor!");
                 }
                 update();
             }
@@ -88,6 +89,7 @@ public class DoctorsTab extends VerticalLayout implements Observer {
             doctors = doctorDAO.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
+            Notification.show("Failed to load list of doctors!", Notification.Type.ERROR_MESSAGE);
         }
         doctorsGrid.setContainerDataSource(new BeanItemContainer<Doctor>(Doctor.class, doctors));
         doctorsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);

@@ -5,10 +5,7 @@ import com.haulmont.testtask.data.entity.Entity;
 import com.haulmont.testtask.gui.forms.EditableForm;
 import com.haulmont.testtask.gui.tabs.Observer;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.sql.SQLException;
@@ -62,6 +59,7 @@ public class CreateWindow extends Window {
                 dao.insert(entity);
             } catch (SQLException e) {
                 e.printStackTrace();
+                Notification.show("Failed create!");
             }
 
             observer.update();
