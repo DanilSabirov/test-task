@@ -32,7 +32,7 @@ public class PatientDAO extends BaseDAO<Patient> {
     }
 
     @Override
-    public PatientImpl getById(long id) throws SQLException {
+    public Patient getById(long id) throws SQLException {
         final String SQL = "SELECT * FROM PATIENTS WHERE id = ?";
 
         PreparedStatement statement = connection.prepareStatement(SQL);

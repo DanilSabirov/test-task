@@ -1,5 +1,7 @@
 package com.haulmont.testtask.data.entity;
 
+import java.util.Objects;
+
 public class PatientImpl extends BaseEntity implements Patient {
     private String name = "";
 
@@ -59,5 +61,26 @@ public class PatientImpl extends BaseEntity implements Patient {
     @Override
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return surname + " " + name + " " + patronymic;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PatientImpl)) return false;
+        PatientImpl patient = (PatientImpl) o;
+        return Objects.equals(getName(), patient.getName()) &&
+                Objects.equals(getSurname(), patient.getSurname()) &&
+                Objects.equals(getPatronymic(), patient.getPatronymic()) &&
+                Objects.equals(getPhoneNumber(), patient.getPhoneNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSurname(), getPatronymic(), getPhoneNumber());
     }
 }

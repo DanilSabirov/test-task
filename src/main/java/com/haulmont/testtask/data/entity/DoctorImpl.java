@@ -1,5 +1,7 @@
 package com.haulmont.testtask.data.entity;
 
+import java.util.Objects;
+
 public class DoctorImpl extends BaseEntity implements Doctor {
     private String name = "";
 
@@ -58,5 +60,26 @@ public class DoctorImpl extends BaseEntity implements Doctor {
     @Override
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    @Override
+    public String toString() {
+        return surname + " " + name + " " + patronymic + ", " + specialty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DoctorImpl)) return false;
+        DoctorImpl doctor = (DoctorImpl) o;
+        return Objects.equals(getName(), doctor.getName()) &&
+                Objects.equals(getSurname(), doctor.getSurname()) &&
+                Objects.equals(getPatronymic(), doctor.getPatronymic()) &&
+                Objects.equals(getSpecialty(), doctor.getSpecialty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSurname(), getPatronymic(), getSpecialty());
     }
 }

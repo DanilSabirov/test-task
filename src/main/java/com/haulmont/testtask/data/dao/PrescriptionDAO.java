@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrescriptionDAO extends BaseDAO<Prescription> {
-    private Connection connection;
-
     public PrescriptionDAO(Connection connection) {
         super(connection);
     }
@@ -27,15 +25,15 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
         statement.setLong(3, entity.getDoctor().getId());
         statement.setDate(4, Date.valueOf(entity.getCreationDate()));
         statement.setInt(5, entity.getDaysValidity());
-        statement.setString(6, entity.getPriority().toString());
+        statement.setString(6, entity.getPriority().name());
 
         statement.executeUpdate();
         statement.close();
     }
 
     @Override
-    public PrescriptionImpl getById(long id) throws SQLException {
-        final String SQL = "SELECT * FROM PRESCRIPTION " +
+    public Prescription getById(long id) throws SQLException {
+        final String SQL = "SELECT * FROM PRESCRIPTIONS " +
                 "WHERE id = ?";
 
         PreparedStatement statement = connection.prepareStatement(SQL);
@@ -64,7 +62,7 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
     @Override
     public void update(Prescription entity) throws SQLException {
-        final String SQL = "UPDATE PRESCRIPTION " +
+        final String SQL = "UPDATE PRESCRIPTIONS " +
                 "SET DESCRIPTION = ?, PATIENT_ID = ?, DOCTOR_ID = ?, " +
                 "CREATION_DATE = ?, DAYS_VALIDITY = ?, PRIORITY = ? " +
                 "WHERE ID = ?";
@@ -85,8 +83,8 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
     @Override
     public List<Prescription> getAll() throws SQLException {
-        String SQL = "SELECT * FROM PRESCRIPTION";
-        List<PrescriptionImpl> list = new ArrayList<>();
+        String SQL = "SELECT * FROM PRESCRIPTIONS";
+        List<Prescription> list = new ArrayList<>();
 
         PreparedStatement statement = connection.prepareStatement(SQL);
 
@@ -95,6 +93,13 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
         PatientDAO patientDAO = new PatientDAO(connection);
         DoctorDAO doctorDAO = new DoctorDAO(connection);
 
+        matchPrescriptions(list, res, patientDAO, doctorDAO);
+
+        statement.close();
+        return list;
+    }
+
+    private void matchPrescriptions(List<Prescription> list, ResultSet res, PatientDAO patientDAO, DoctorDAO doctorDAO) throws SQLException {
         while (res.next()) {
             long id = res.getLong("ID");
             String description = res.getString("DESCRIPTION");
@@ -109,9 +114,37 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
             list.add(new PrescriptionImpl(id, description, patient, doctor, creationDate, daysValidity, priority));
         }
+    }
+
+    public List<Prescription> getAll(String subString, Patient patient, Priority priority) throws SQLException {
+        String SQL = "SELECT * FROM PRESCRIPTIONS WHERE DESCRIPTION like (?) AND PATIENT_ID LIKE (?) AND PRIORITY LIKE (?)";
+        List<Prescription> list = new ArrayList<>();
+
+        PreparedStatement statement = connection.prepareStatement(SQL);
+
+        statement.setString(1, "%" + subString + "%");
+        if (patient != null) {
+            statement.setLong(2, patient.getId());
+        }
+        else {
+            statement.setString(2, "%");
+        }
+        if (priority != null) {
+            statement.setString(3, priority.name());
+        }
+        else {
+            statement.setString(3, "%");
+        }
+
+        ResultSet res = statement.executeQuery();
+
+        PatientDAO patientDAO = new PatientDAO(connection);
+        DoctorDAO doctorDAO = new DoctorDAO(connection);
+
+        matchPrescriptions(list, res, patientDAO, doctorDAO);
 
         statement.close();
-        return null;
+        return list;
     }
 
     @Override

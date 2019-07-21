@@ -41,7 +41,7 @@ public class PatientsTab extends VerticalLayout implements Observer {
     private void initPatientsGrid() {
         patientsGrid.setSizeFull();
         patientsGrid.setColumns("name", "surname", "patronymic", "phoneNumber");
-        patientsGrid.setColumnOrder("name", "surname", "patronymic");
+        patientsGrid.setColumnOrder("surname", "name", "patronymic");
     }
 
     private HorizontalLayout getButtons() {
@@ -86,5 +86,6 @@ public class PatientsTab extends VerticalLayout implements Observer {
             e.printStackTrace();
         }
         patientsGrid.setContainerDataSource(new BeanItemContainer<Patient>(Patient.class, patients));
+        patientsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
     }
 }

@@ -1,6 +1,7 @@
 package com.haulmont.testtask.data.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class PrescriptionImpl extends BaseEntity implements Prescription {
     private String description = "";
@@ -13,11 +14,13 @@ public class PrescriptionImpl extends BaseEntity implements Prescription {
 
     private int daysValidity = 1;
 
-    private Priority priority = Priority.NORMAL;
+    private Priority priority = Priority.Normal;
 
     public PrescriptionImpl(long id, Patient patient, Doctor doctor) {
         super(id);
         creationDate = LocalDate.now();
+        this.patient = patient;
+        this.doctor = doctor;
     }
 
     public PrescriptionImpl(long id, String description, Patient patient, Doctor doctor, LocalDate creationDate, int daysValidity, Priority priority) {
@@ -88,5 +91,31 @@ public class PrescriptionImpl extends BaseEntity implements Prescription {
     @Override
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PrescriptionImpl)) return false;
+        PrescriptionImpl that = (PrescriptionImpl) o;
+        return getDaysValidity() == that.getDaysValidity() &&
+                Objects.equals(getDescription(), that.getDescription()) &&
+                Objects.equals(getPatient(), that.getPatient()) &&
+                Objects.equals(getDoctor(), that.getDoctor()) &&
+                Objects.equals(getCreationDate(), that.getCreationDate()) &&
+                getPriority() == that.getPriority();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDescription(), getPatient(), getDoctor(), getCreationDate(), getDaysValidity(), getPriority());
+    }
+
+    @Override
+    public String toString() {
+        return "PrescriptionImpl{" +
+                "description='" + description + '\'' +
+                ", patient=" + patient +
+                '}';
     }
 }

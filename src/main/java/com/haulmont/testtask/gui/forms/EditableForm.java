@@ -7,4 +7,6 @@ public interface EditableForm<T extends Entity> extends Component {
     T get();
 
     void set(T entity);
+
+    boolean isValid();
 }

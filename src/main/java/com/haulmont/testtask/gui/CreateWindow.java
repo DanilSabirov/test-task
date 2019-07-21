@@ -44,23 +44,29 @@ public class CreateWindow extends Window {
         HorizontalLayout buttons = new HorizontalLayout(create, cancel);
         buttons.setSpacing(true);
 
-        setContent(new VerticalLayout(editableForm, buttons));
+
+        VerticalLayout layout = new VerticalLayout(editableForm, buttons);
+        layout.setMargin(true);
+
+        setContent(layout);
 
         center();
         setModal(true);
     }
 
     private void create() {
-        entity = editableForm.get();
+        if (editableForm.isValid()) {
+            entity = editableForm.get();
 
-        try {
-            dao.insert(entity);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                dao.insert(entity);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            observer.update();
+            close();
         }
-
-        observer.update();
-        close();
     }
 
     private void cancel() {

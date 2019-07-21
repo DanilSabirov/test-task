@@ -32,7 +32,7 @@ public class DoctorDAO extends BaseDAO<Doctor> {
     }
 
     @Override
-    public DoctorImpl getById(long id) throws SQLException {
+    public Doctor getById(long id) throws SQLException {
         final String SQL = "SELECT * FROM DOCTORS WHERE id = ?";
 
         PreparedStatement statement = connection.prepareStatement(SQL);
@@ -42,7 +42,7 @@ public class DoctorDAO extends BaseDAO<Doctor> {
         ResultSet res = statement.executeQuery();
         if (res.next()) {
 
-            DoctorImpl doctor = new DoctorImpl(res.getLong("ID"), res.getString("NAME"),
+            Doctor doctor = new DoctorImpl(res.getLong("ID"), res.getString("NAME"),
                     res.getString("SURNAME"), res.getString("PATRONYMIC"),
                     res.getString("SPECIALTY"));
             statement.close();
@@ -80,7 +80,7 @@ public class DoctorDAO extends BaseDAO<Doctor> {
         ResultSet res = statement.executeQuery();
 
         while (res.next()) {
-            DoctorImpl doctor = new DoctorImpl(res.getLong("ID"), res.getString("NAME"),
+            Doctor doctor = new DoctorImpl(res.getLong("ID"), res.getString("NAME"),
                     res.getString("SURNAME"), res.getString("PATRONYMIC"),
                     res.getString("SPECIALTY"));
             list.add(doctor);

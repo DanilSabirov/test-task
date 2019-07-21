@@ -45,23 +45,28 @@ public class EditWindow extends Window {
         HorizontalLayout buttons = new HorizontalLayout(save, cancel);
         buttons.setSpacing(true);
 
-        setContent(new VerticalLayout(editableForm, buttons));
+        VerticalLayout layout = new VerticalLayout(editableForm, buttons);
+        layout.setMargin(true);
+
+        setContent(layout);
 
         center();
         setModal(true);
     }
 
     private void save() {
-        entity = editableForm.get();
+        if (editableForm.isValid()) {
+            entity = editableForm.get();
 
-        try {
-            dao.update(entity);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                dao.update(entity);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            observer.update();
+            close();
         }
-
-        observer.update();
-        close();
     }
 
     private void cancel() {
