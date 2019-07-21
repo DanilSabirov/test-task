@@ -3,9 +3,9 @@ package com.haulmont.testtask.data.dao;
 import com.haulmont.testtask.data.entity.*;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PrescriptionDAO extends BaseDAO<Prescription> {
     public PrescriptionDAO(Connection connection) {
@@ -83,7 +83,7 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
     @Override
     public List<Prescription> getAll() throws SQLException {
-        String SQL = "SELECT * FROM PRESCRIPTIONS";
+        final String SQL = "SELECT * FROM PRESCRIPTIONS";
         List<Prescription> list = new ArrayList<>();
 
         PreparedStatement statement = connection.prepareStatement(SQL);
@@ -117,7 +117,7 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
     }
 
     public List<Prescription> getAll(String subString, Patient patient, Priority priority) throws SQLException {
-        String SQL = "SELECT * FROM PRESCRIPTIONS WHERE DESCRIPTION like (?) AND PATIENT_ID LIKE (?) AND PRIORITY LIKE (?)";
+        final String SQL = "SELECT * FROM PRESCRIPTIONS WHERE DESCRIPTION like (?) AND PATIENT_ID LIKE (?) AND PRIORITY LIKE (?)";
         List<Prescription> list = new ArrayList<>();
 
         PreparedStatement statement = connection.prepareStatement(SQL);
@@ -145,6 +145,31 @@ public class PrescriptionDAO extends BaseDAO<Prescription> {
 
         statement.close();
         return list;
+    }
+
+    public Map<Doctor, Integer>  getDoctorsCountPrescriptions() throws SQLException {
+        final String SQL = "SELECT DOCTOR_ID, COUNT(*) as CNT " +
+                "FROM PRESCRIPTIONS " +
+                "GROUP BY DOCTOR_ID";
+
+        Statement statement = connection.createStatement();
+        ResultSet res = statement.executeQuery(SQL);
+
+        List<Doctor> doctors = new DoctorDAO(connection).getAll();
+        Map<Long, Integer> doctorIDPrescriptions = new TreeMap<>();
+
+        while (res.next()) {
+            doctorIDPrescriptions.put(res.getLong("DOCTOR_ID"), res.getInt("CNT"));
+        }
+
+        Map<Doctor, Integer> doctorsCountPrescriptions = new TreeMap<>();
+
+        for (Doctor doctor: doctors) {
+            int cnt = doctorIDPrescriptions.get(doctor.getId());
+            doctorsCountPrescriptions.put(doctor, cnt);
+        }
+
+        return doctorsCountPrescriptions;
     }
 
     @Override

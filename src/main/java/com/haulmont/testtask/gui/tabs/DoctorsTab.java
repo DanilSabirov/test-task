@@ -58,7 +58,12 @@ public class DoctorsTab extends VerticalLayout implements Observer {
             if (doctorsGrid.getSelectedRow() != null) {
                 Doctor doctor = (Doctor) doctorsGrid.getSelectedRow();
                 try {
-                    doctorDAO.delete(doctor);
+                    if (doctorDAO.canDelete(doctor)) {
+                        doctorDAO.delete(doctor);
+                    }
+                    else {
+                        Notification.show("Doctor has prescription!", Notification.Type.ERROR_MESSAGE);
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

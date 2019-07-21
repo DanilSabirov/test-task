@@ -73,7 +73,7 @@ public class PatientImpl extends BaseEntity implements Patient {
         if (this == o) return true;
         if (!(o instanceof PatientImpl)) return false;
         PatientImpl patient = (PatientImpl) o;
-        return Objects.equals(getName(), patient.getName()) &&
+        return Objects.equals(getId(), patient.getId()) && Objects.equals(getName(), patient.getName()) &&
                 Objects.equals(getSurname(), patient.getSurname()) &&
                 Objects.equals(getPatronymic(), patient.getPatronymic()) &&
                 Objects.equals(getPhoneNumber(), patient.getPhoneNumber());
@@ -81,6 +81,6 @@ public class PatientImpl extends BaseEntity implements Patient {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getSurname(), getPatronymic(), getPhoneNumber());
+        return Objects.hash(getId(), getName(), getSurname(), getPatronymic(), getPhoneNumber());
     }
 }

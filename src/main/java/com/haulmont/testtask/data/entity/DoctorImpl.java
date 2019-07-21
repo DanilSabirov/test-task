@@ -2,7 +2,7 @@ package com.haulmont.testtask.data.entity;
 
 import java.util.Objects;
 
-public class DoctorImpl extends BaseEntity implements Doctor {
+public class DoctorImpl extends BaseEntity implements Doctor, Comparable<DoctorImpl> {
     private String name = "";
 
     private String surname = "";
@@ -72,7 +72,7 @@ public class DoctorImpl extends BaseEntity implements Doctor {
         if (this == o) return true;
         if (!(o instanceof DoctorImpl)) return false;
         DoctorImpl doctor = (DoctorImpl) o;
-        return Objects.equals(getName(), doctor.getName()) &&
+        return Objects.equals(getId(), doctor.getId()) && Objects.equals(getName(), doctor.getName()) &&
                 Objects.equals(getSurname(), doctor.getSurname()) &&
                 Objects.equals(getPatronymic(), doctor.getPatronymic()) &&
                 Objects.equals(getSpecialty(), doctor.getSpecialty());
@@ -80,6 +80,12 @@ public class DoctorImpl extends BaseEntity implements Doctor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getSurname(), getPatronymic(), getSpecialty());
+        return Objects.hash(getId(), getName(), getSurname(), getPatronymic(), getSpecialty());
+    }
+
+
+    @Override
+    public int compareTo(DoctorImpl o) {
+        return Long.compare(getId(), o.getId());
     }
 }

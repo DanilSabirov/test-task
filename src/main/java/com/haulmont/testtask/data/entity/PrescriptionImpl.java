@@ -99,6 +99,7 @@ public class PrescriptionImpl extends BaseEntity implements Prescription {
         if (!(o instanceof PrescriptionImpl)) return false;
         PrescriptionImpl that = (PrescriptionImpl) o;
         return getDaysValidity() == that.getDaysValidity() &&
+                Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDescription(), that.getDescription()) &&
                 Objects.equals(getPatient(), that.getPatient()) &&
                 Objects.equals(getDoctor(), that.getDoctor()) &&
@@ -108,7 +109,7 @@ public class PrescriptionImpl extends BaseEntity implements Prescription {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDescription(), getPatient(), getDoctor(), getCreationDate(), getDaysValidity(), getPriority());
+        return Objects.hash(getId(), getDescription(), getPatient(), getDoctor(), getCreationDate(), getDaysValidity(), getPriority());
     }
 
     @Override

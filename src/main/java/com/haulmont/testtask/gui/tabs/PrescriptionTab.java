@@ -7,6 +7,7 @@ import com.haulmont.testtask.data.entity.Prescription;
 import com.haulmont.testtask.data.entity.PrescriptionImpl;
 import com.haulmont.testtask.gui.CreateWindow;
 import com.haulmont.testtask.gui.EditWindow;
+import com.haulmont.testtask.gui.StatisticWindow;
 import com.haulmont.testtask.gui.forms.FiltersForms;
 import com.haulmont.testtask.gui.forms.PrescriptionForm;
 import com.vaadin.data.util.BeanItemContainer;
@@ -95,10 +96,10 @@ public class PrescriptionTab extends VerticalLayout implements Observer {
 
         Button statistic = new Button("Statistic");
         statistic.addClickListener(event -> {
-
+            mainUI.addWindow(new StatisticWindow(prescriptionDAO));
         });
 
-        buttonLayout.addComponents(create, edit, delete);
+        buttonLayout.addComponents(create, edit, delete, statistic);
         buttonLayout.setSpacing(true);
 
         return buttonLayout;

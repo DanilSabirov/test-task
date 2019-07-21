@@ -96,4 +96,17 @@ public class PatientDAO extends BaseDAO<Patient> {
         statement.executeUpdate();
         statement.close();
     }
+
+    public boolean canDelete(Patient patient) throws SQLException {
+        final String SQL = "SELECT COUNT(*) as CNT " +
+                "FROM (SELECT ID FROM PRESCRIPTIONS WHERE PATIENT_ID = ?)";
+        PreparedStatement statement = connection.prepareStatement(SQL);
+
+        statement.setLong(1, patient.getId());
+
+        ResultSet res = statement.executeQuery();
+        res.next();
+        int cnt = res.getInt("CNT");
+        return cnt == 0;
+    }
 }
